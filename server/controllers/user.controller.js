@@ -126,3 +126,13 @@ export const logout = asyncHandler ( async (req,res,next)=>{
             responseData:"Logged out successfully"
         })
 })
+
+export const getAllUsers = asyncHandler(async(req,res,next)=>{
+
+    const otherUser = await User.find({_id:{$ne:req.user.id}})
+
+    res.status(200).json({
+        success:true,
+        responseData:otherUser
+    })
+})

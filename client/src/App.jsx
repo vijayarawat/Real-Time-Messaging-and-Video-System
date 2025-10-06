@@ -4,6 +4,7 @@ import { Routes ,Route} from "react-router"
 import Login  from './pages/authentication/login'
 import Signup from './pages/authentication/signup'
 import Home from './pages/home/Home'
+import {Toaster} from 'react-hot-toast'
 
 import { useDispatch, useSelector } from 'react-redux'
 // import { login } from './store/slice/user/userSlice'
@@ -29,7 +30,7 @@ function App() {
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/signup" element={<Signup/>}></Route>
     </Routes> 
-    
+    <Toaster position='top-center' reverseOrder={false}/> 
     </>
   )
 }

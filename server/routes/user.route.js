@@ -1,4 +1,4 @@
-import {getProfile, login,logout,register} from "../controllers/user.controller.js"
+import {getAllUsers, getProfile, login,logout,register} from "../controllers/user.controller.js"
 import express from "express"
 import { isAuthenticated } from "../middlewares/authMiddleware.js"
 
@@ -8,5 +8,7 @@ router.post('/register',register)
 router.post('/login',login)
 router.get('/get-profile',isAuthenticated,getProfile)
 router.post('/logout',isAuthenticated,logout)
+router.get('/get-All-Users',isAuthenticated,getAllUsers)
+
 
 export default router

@@ -1,6 +1,11 @@
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
+export const loginUserThunk = createAsyncThunk("users/fetchbyId",async()=>{
 
-// export const loginUserThunk = createAsyncThunk("users/fetchbyId",async()=>{
+   try{
 
-//     console.log("hey vijaya")
-// })
+   }
+   catch(e){
+    console.log(error)
+   }
+})

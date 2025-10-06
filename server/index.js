@@ -12,7 +12,10 @@ app.use(express.json())
 app.use(cookieParser());
 // routes
 import router from "./routes/user.route.js"
+import messageRouter from "./routes/messageRoute.js"; 
 app.use('/api/v1/user',router)
+app.use('/api/v1/message',messageRouter)
+
 
 //middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js"

@@ -1,6 +1,27 @@
 import React, { useState } from "react";
 import {toast} from "react-hot-toast"
+import { loginUserThunk } from "../../store/slice/user/userThunk";
+import { useDispatch,useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+
+
 const Login = () => {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  
+
+  const {isAuthenticated} = useSelector((state)=>state.user)
+
+    // console.log("Is Authenticated", isAuthenticated)
+    
+  useEffect(()=>{
+        console.log(isAuthenticated)
+        if(isAuthenticated ){
+            navigate('/')
+        }
+  },[isAuthenticated])
+
 
   const [loginData, setLoginData] = useState({
     username:"",password:""
@@ -13,9 +34,18 @@ const Login = () => {
     }))
   }
 
-    const handleLogin=()=>{
-      console.log("login")
+    const handleLogin= async()=>{
+    //   if(!loginData.username || !loginData.password){
+    //     toast.error("Please enter username and password");
+    // return;
+      // }
+
+      // console.log("login")
       toast.success("login Successful")
+      const response = await dispatch(loginUserThunk(loginData))
+      if(response?.payload?.success){
+        navigate('/')
+    }
     }
 
     return (
@@ -28,21 +58,23 @@ const Login = () => {
           <input
             type="text"
             name="username"
+            value={loginData.username}
+            onChange={handleInputChange}
             className="grow"
             placeholder="Username"
-            
           />
         </label>
 
         <label className="input input-bordered flex items-center gap-2 w-full h-12">
      
           <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="grow"
-          
-          />
+    type="password"
+    name="password"
+    value={loginData.password}
+    onChange={handleInputChange}
+    placeholder="Password"
+    className="grow"
+  />
         </label>
 
         
@@ -52,9 +84,9 @@ const Login = () => {
 
         <p>
           Don't have an account? &nbsp;
-          {/* <Link to="/signup" className="text-blue-400 underline">
+          <Link to="/signup" className="text-blue-400 underline">
             Sign Up
-          </Link> */}
+          </Link>
         </p>
       </div>
     </div>

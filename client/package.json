@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
     "daisyui": "^5.1.25",
     "icons": "^1.0.0",
     "react": "^19.2.0",

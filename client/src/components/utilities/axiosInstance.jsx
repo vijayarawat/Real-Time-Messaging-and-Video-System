@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:5000/api/v1", // 👈 change as needed
+const DB_URL = import.meta.env.VITE_DB_URL;
+
+const axiosInstance = axios.create({
+  baseURL:DB_URL, 
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   },
-  timeout: 10000, 
   withCredentials: true, 
 });
 
-export default instance;
+export default axiosInstance;

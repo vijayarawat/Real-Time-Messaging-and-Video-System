@@ -34,7 +34,8 @@ export const register = asyncHandler (async (req,res,next)=>{
                 Date.now() + process.env.COOKIE_EXPIRES *24*20*20*1000
             ),
             httpOnly:true,
-            secure:process.env.NODE_ENV === 'PRODUCTION',
+            secure:true,
+            // secure:process.env.NODE_ENV === 'PRODUCTION',
             sameSite:"None"
         })
         .json({
@@ -66,6 +67,7 @@ export const register = asyncHandler (async (req,res,next)=>{
 export const login = asyncHandler ( async (req,res,next)=>{
    
         const {userName,password} = req.body;
+        console.log("Login request body:", req.body);
 
         if(!userName || !password ){     
             return next(new errorHandler("Enter valid username and password",400))
@@ -89,13 +91,15 @@ export const login = asyncHandler ( async (req,res,next)=>{
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: true,
             sameSite: "None",
+            // domain:process.env.CLIENT_URL,
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
         });
 
         res.status(200).json({
             success: true,
+            responseData: user,
             message: "Login successful",
             token
         });

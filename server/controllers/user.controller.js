@@ -67,7 +67,7 @@ export const register = asyncHandler (async (req,res,next)=>{
 export const login = asyncHandler ( async (req,res,next)=>{
    
         const {userName,password} = req.body;
-        console.log("Login request body:", req.body);
+        // console.log("Login request body:", req.body);
 
         if(!userName || !password ){     
             return next(new errorHandler("Enter valid username and password",400))
@@ -108,7 +108,7 @@ export const login = asyncHandler ( async (req,res,next)=>{
 export const getProfile = asyncHandler ( async (req,res,next)=>{
    
         const userId = req.user.id;
-        console.log(userId)
+        // console.log(userId)
 
         const profile = await User.findById(userId)
 

@@ -2,7 +2,7 @@ import Message  from "../models/messageModel.js"
 import Conversation from "../models/conversationModel.js"
 import { asyncHandler } from "../utilities/asyncHandlerUtility.js";
 import { errorHandler } from "../utilities/errorHandlerUtility.js";
-
+import {io,getSocketId} from "../socket/socket.js"
 
 export const sendMessage = asyncHandler (async (req,res,next)=>{
            
@@ -35,6 +35,10 @@ export const sendMessage = asyncHandler (async (req,res,next)=>{
         conversation.messages.push(newMessage._id);
         await conversation.save();
     }
+
+    const socketId = getSocketId(recieverId)
+    io.to(socketId).emit("newMessage",newMessage)
+
 
     res.status(200)
         .json({

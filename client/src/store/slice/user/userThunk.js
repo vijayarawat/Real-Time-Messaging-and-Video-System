@@ -60,6 +60,7 @@ export const logoutUserThunk = createAsyncThunk(
     try {
       // Send request using payload
       const response = await axiosInstance.post("/user/logout");
+      
       toast.success("Logout successfull")
       return response.data;
     } 
@@ -77,6 +78,7 @@ export const getUserProfileThunk = createAsyncThunk(
   "users/getProfile",
   async (_, { rejectWithValue }) => {
     try {
+        
       // Log the payload you actually received
       // console.log("Sending login data:", { username, password });
 

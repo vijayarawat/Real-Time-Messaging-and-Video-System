@@ -1,11 +1,14 @@
-import express from "express"
-import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 dotenv.config()
 
+import express from "express"
+import cookieParser from "cookie-parser";
+import router from "./routes/user.route.js"
+import messageRouter from "./routes/messageRoute.js"; 
 import cors from 'cors'
 import { connectDb } from "./db/connectionDb.js"
-const app = express()
+import {app,io,server} from "./socket/socket.js"
+// const app = express()
 
 connectDb();
 const PORT=process.env.PORT
@@ -24,9 +27,6 @@ app.use(cookieParser());
 
 
 // routes
-
-import router from "./routes/user.route.js"
-import messageRouter from "./routes/messageRoute.js"; 
 app.use('/api/v1/user',router)
 app.use('/api/v1/message',messageRouter)
 
@@ -36,6 +36,6 @@ import { errorMiddleware } from "./middlewares/errorMiddleware.js"
 app.use(errorMiddleware)
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
 console.log(`Listening on PORT ${PORT}`)
 })

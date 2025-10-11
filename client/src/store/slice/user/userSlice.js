@@ -5,7 +5,7 @@ const initialState = {
     isAuthenticated : false,
     screenLoading:true,
     otherUsers:null,
-    selectedUser:null,
+    selectedUser:JSON.parse(localStorage.getItem("selectedUser")),
     userProfile:null,
     buttonLoading:false
     
@@ -17,6 +17,7 @@ export const userSlice = createSlice({
     reducers:{
         login:(e)=>{},
         setSelectedUsers:(state,action)=>{
+            localStorage.setItem("selectedUser",JSON.stringify(action.payload))
             state.selectedUser = action.payload
         }
 
@@ -74,6 +75,9 @@ export const userSlice = createSlice({
             state.buttonLoading = false;
             state.isAuthenticated = false;
             state.userProfile = false;
+            state.selectedUser= null;
+            state.otherUsers = null;
+            localStorage.clear();
 
         })
 
@@ -92,8 +96,9 @@ export const userSlice = createSlice({
             // console.log(state.userProfile)
             state.screenLoading = false;
             state.isAuthenticated = true;
-            // state.userProfile = false;
-            console.log(action.payload)
+            // localStorage.clear();
+            state.userProfile = action?.payload?.responseData
+            // console.log(action.payload)
 
         })
 

@@ -1,131 +1,66 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUserThunk,getOtherUsersThunk,logoutUserThunk,getUserProfileThunk,registerUserThunk } from "./userThunk.js";
+import { sendMessageThunk ,getMessageThunk} from "./messageThunk";
+
 
 const initialState = {
-    isAuthenticated : false,
-    screenLoading:true,
-    otherUsers:null,
-    selectedUser:null,
-    userProfile:null,
-    buttonLoading:false
-    
+    buttonLoading:false,
+    messages:[],
+    screenLoading:false
 }
 
-export const userSlice = createSlice({
-    name:"user",
+export const messageSlice = createSlice({
+    name:"message",
     initialState,
     reducers:{
-        login:(e)=>{},
-        setSelectedUsers:(state,action)=>{
-            state.selectedUser = action.payload
-        }
-
+        setNewMessage: (state, action) => {
+      const oldMessages = state.messages ?? [];
+      state.messages = [...oldMessages, action.payload];
+    },
     },
     extraReducers:(builder)=>{
-        //Login Functionality
-        builder.addCase(loginUserThunk.pending,(state,action)=>{
-            // console.log("Pending")
+        //Send message Functionality
+        builder.addCase(sendMessageThunk.pending,(state,action)=>{
             state.buttonLoading = true
         })
 
-        builder.addCase(loginUserThunk.fulfilled,(state,action)=>{
-            // console.log("Fulfilled")
-            state.userProfile = action.payload?.responseData
-            // console.log(state.userProfile)
+        builder.addCase(sendMessageThunk.fulfilled,(state,action)=>{
             state.buttonLoading = false
-            state.isAuthenticated = true
+
+            const oldMessages = state.messages ?? [];
+      state.messages = [...oldMessages, action.payload?.responseData];
+            // const newMsg = action?.payload?.responseData?.message;
+            // // console.log(newMsg)
+            // state.messages = [...state.messages, newMsg];
+
+            // console.log(action.payload)
         })
 
-        builder.addCase(loginUserThunk.rejected,(state,action)=>{
-            // console.log("Rejected")
+        builder.addCase(sendMessageThunk.rejected,(state,action)=>{
+ 
             state.buttonLoading = true
         })
 
-
-        //Register Functionality
-        builder.addCase(registerUserThunk.pending,(state,action)=>{
-            // console.log("Pending")
+        //get Messages
+        builder.addCase(getMessageThunk.pending,(state,action)=>{
             state.buttonLoading = true
         })
 
-        builder.addCase(registerUserThunk.fulfilled,(state,action)=>{
-            // console.log("Fulfilled")
-            state.userProfile = action.payload?.responseData
-            // console.log(state.userProfile)
-            state.isAuthenticated = true
-
+        builder.addCase(getMessageThunk.fulfilled,(state,action)=>{
             state.buttonLoading = false
-        })
-
-        builder.addCase(registerUserThunk.rejected,(state,action)=>{
-            // console.log("Rejected")
-            state.buttonLoading = true
-        })
-
-        //Logout successfull 
-        builder.addCase(logoutUserThunk.pending,(state,action)=>{
-            // console.log("Pending")
-            state.buttonLoading = true
-        })
-
-        builder.addCase(logoutUserThunk.fulfilled,(state,action)=>{
-            // console.log("Fulfilled")
-            // console.log(state.userProfile)
-            state.buttonLoading = false;
-            state.isAuthenticated = false;
-            state.userProfile = false;
-
-        })
-
-        builder.addCase(logoutUserThunk.rejected,(state,action)=>{
-            // console.log("Rejected")
-            state.screenLoading = true
-        })
-
-        //Get User profile successfull 
-        builder.addCase(getUserProfileThunk.pending,(state,action)=>{
-            // console.log("Pending")
-        })
-
-        builder.addCase(getUserProfileThunk.fulfilled,(state,action)=>{
-            // console.log("Fulfilled")
-            // console.log(state.userProfile)
-            state.screenLoading = false;
-            state.isAuthenticated = true;
-            // state.userProfile = false;
-            console.log(action.payload)
-
-        })
-
-        builder.addCase(getUserProfileThunk.rejected,(state,action)=>{
-            // console.log("Rejected")
-            state.screenLoading = true
-        })
-
-        //Get other Users successfull 
-        builder.addCase(getOtherUsersThunk.pending,(state,action)=>{
-            // console.log("Pending")
-        })
-
-        builder.addCase(getOtherUsersThunk.fulfilled,(state,action)=>{
-            // console.log("Fulfilled")
-            // console.log(state.userProfile)
-            state.screenLoading = false;
-            state.otherUsers = action.payload?.responseData;
-            // state.userProfile = false;
             // console.log(action.payload)
 
+            state.messages = action?.payload?.responseData?.messages
         })
 
-        builder.addCase(getOtherUsersThunk.rejected,(state,action)=>{
-            // console.log("Rejected")
-            state.screenLoading = true
+        builder.addCase(getMessageThunk.rejected,(state,action)=>{
+ 
+            state.buttonLoading = true
         })
+
         
     }
 })
-//getOtherUsersThunk
-export const{login, setSelectedUsers} = userSlice.actions
-// export const{loginUserThunk}  = userSlice.actions
 
-export default userSlice.reducer
+
+export const {setNewMessage} = messageSlice.actions;
+export default messageSlice.reducer

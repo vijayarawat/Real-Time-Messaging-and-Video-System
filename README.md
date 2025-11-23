@@ -367,33 +367,6 @@ NODE_ENV=production npm start
 - Socket.io room management for targeted messaging
 - Message filtering to prevent duplicates
 
-## Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
-## Known Limitations
-
-- Direct peer-to-peer connections may require TURN server for NAT traversal
-- Group calls limited by bandwidth and browser capabilities
-- Screen sharing not yet implemented
-- Call recording not available
-
-## Future Enhancements
-
-- [ ] Screen sharing in video calls
-- [ ] Call recording and playback
-- [ ] Message search functionality
-- [ ] File sharing in chats
-- [ ] Emoji reactions in messages
-- [ ] Message editing and deletion
-- [ ] Read receipts
-- [ ] User status (away, busy, etc.)
-- [ ] Group announcements
-- [ ] Audio-only calling
-
 ## Troubleshooting
 
 ### Messages not sending
@@ -420,23 +393,3 @@ Contributions are welcome! Please:
 2. Make your changes
 3. Test thoroughly
 4. Submit a pull request
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Support
-
-For issues and questions:
-1. Check existing documentation
-2. Review error messages in console
-3. Check server logs
-4. Create an issue with detailed description
-
-## Author
-
-Created by Vijaya Rawat
-
----
-
-**Happy Chatting!** 🚀

@@ -4,7 +4,8 @@ dotenv.config()
 import express from "express"
 import cookieParser from "cookie-parser";
 import router from "./routes/user.route.js"
-import messageRouter from "./routes/messageRoute.js"; 
+import messageRouter from "./routes/messageRoute.js";
+import groupRouter from "./routes/groupRoute.js";
 import cors from 'cors'
 import { connectDb } from "./db/connectionDb.js"
 import {app,io,server} from "./socket/socket.js"
@@ -14,8 +15,13 @@ connectDb();
 const PORT=process.env.PORT
 app.use(express.json())
 
+const allowedOrigins = process.env.CLIENT_URL.split(",");
+
+
+
 app.use(cors({
-    origin :[process.env.CLIENT_URL],credentials:true
+    origin :allowedOrigins,
+            credentials:true
 }))
 app.use(cookieParser());
 
@@ -29,6 +35,7 @@ app.use(cookieParser());
 // routes
 app.use('/api/v1/user',router)
 app.use('/api/v1/message',messageRouter)
+app.use('/api/v1/group',groupRouter)
 
 
 //middlewares

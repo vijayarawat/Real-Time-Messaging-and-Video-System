@@ -24,11 +24,18 @@ function App() {
   console.log(onlineUsers)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    dispatch(initalizeSocket(userProfile?._id));
-  }, [isAuthenticated, dispatch]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) return;
+  //   dispatch(initalizeSocket(userProfile?._id));
+  // }, [isAuthenticated, dispatch]);
 
+// Initialize socket ONLY when userProfile is loaded
+useEffect(() => {
+  if (isAuthenticated && userProfile?._id) {
+    console.log("Initializing socket with userId:", userProfile._id);
+    dispatch(initalizeSocket(userProfile._id));
+  }
+}, [isAuthenticated, userProfile, dispatch]);
 
   
   useEffect(()=>{

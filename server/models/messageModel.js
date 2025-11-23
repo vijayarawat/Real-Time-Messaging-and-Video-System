@@ -10,11 +10,21 @@ const messageSchema = new mongoose.Schema({
     recieverId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
-        required:true
+        default:null
+    },
+    groupId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Group',
+        default:null
     },
     message:{
         type:String,
         required:true
+    },
+    messageType:{
+        type:String,
+        enum:['direct','group'],
+        default:'direct'
     }
 },{timestamps:true})
 

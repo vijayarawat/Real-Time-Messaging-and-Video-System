@@ -41,7 +41,6 @@ const Login = () => {
       // }
 
       // console.log("login")
-      toast.success("login Successful")
       const response = await dispatch(loginUserThunk(loginData))
       if(response?.payload?.success){
         navigate('/')

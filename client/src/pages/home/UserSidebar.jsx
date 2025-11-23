@@ -1,5 +1,5 @@
 import React, { useEffect, useState }  from "react";
-import { IoSearch } from "react-icons/io5";
+import { IoSearchSharp, IoLogOut } from "react-icons/io5";
 import User from "./user";
 import { useDispatch, useSelector } from "react-redux";
 import { getOtherUsersThunk, logoutUserThunk } from "../../store/slice/user/userThunk";
@@ -13,7 +13,6 @@ const UserSidebar = ()=>{
 
     const [searchValue, setSearchValue] = useState('')
     const [users, setUsers] = useState([])
-    // console.log("other Users", otherUsers)
 
     useEffect(()=>{
         if(!searchValue)
@@ -28,7 +27,7 @@ const UserSidebar = ()=>{
                 })
             )
         }
-    },[searchValue])
+    },[searchValue, otherUsers])
 
     const handleLogout= async ()=>{
         await dispatch(logoutUserThunk())
@@ -41,40 +40,70 @@ const UserSidebar = ()=>{
         }
         )()
     },[])
+    
+    
     return(
-        <>
-     
-        <div className="max-w-[20em] w-full h-screen flex flex-col">
-            <h1 className="bg-black mx-3 px-2 py-1 rounded-lg mt-3 text-[#7480FF] text-xl font-semibold">Gup Shup</h1>
-        <div className="p-3">
-            <label className="input">
-                <IoSearch />
-            <input onChange={(e)=>setSearchValue(e.target.value)} type="search" required placeholder="Search" />
-            </label>
-        </div>
-        <div className="h-full overflow-y-auto px-3 flex flex-col gap-2">
-            {users?.map(userDetails=>{
-                return(
-                <User key ={userDetails?._id} userDetails={userDetails}/>
-                )
-            })}
-            
+        <div className="w-80 h-screen flex flex-col bg-gradient-to-b from-slate-800 to-slate-900 border-r border-slate-700/50 shadow-xl">
+            {/* Header */}
+            <div className="border-b border-slate-700/50 px-4 py-4">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Gupshup</h1>
+                <p className="text-xs text-slate-400 mt-1">Direct Messages</p>
+            </div>
 
-        </div>
-        <div className="flex items-cente justify-between p-3">
-            <div className="flex items-center  gap-3">
-            <div className="avatar">
-            <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
-                <img src={userProfile?.avatar} />
+            {/* Search */}
+            <div className="px-4 py-3 border-b border-slate-700/50">
+                <div className="relative">
+                    <IoSearchSharp className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                    <input 
+                        onChange={(e)=>setSearchValue(e.target.value)} 
+                        type="search" 
+                        placeholder="Search users..."
+                        className="w-full pl-10 pr-4 py-2 bg-slate-700 text-white placeholder-slate-400 rounded-lg border border-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    />
+                </div>
             </div>
+
+            {/* Users List */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-slate-700">
+                <div className="flex flex-col gap-2 px-3 py-3">
+                    {users?.length > 0 ? (
+                        users.map(userDetails=>{
+                            return(
+                                <User key={userDetails?._id} userDetails={userDetails}/>
+                            )
+                        })
+                    ) : (
+                        <div className="flex items-center justify-center py-8 text-slate-400">
+                            <p>No users found</p>
+                        </div>
+                    )}
+                </div>
             </div>
-            <h2>{userProfile?.userName}</h2>
-       
+
+            {/* User Profile Footer */}
+            <div className="border-t border-slate-700/50 px-4 py-4 bg-slate-800/50 backdrop-blur">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <img 
+                            src={userProfile?.avatar} 
+                            alt={userProfile?.userName}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-purple-400/50"
+                        />
+                        <div className="min-w-0">
+                            <p className="text-sm font-semibold text-white truncate">{userProfile?.fullName}</p>
+                            <p className="text-xs text-slate-400 truncate">@{userProfile?.userName}</p>
+                        </div>
+                    </div>
+                    <button 
+                        onClick={handleLogout} 
+                        className="btn btn-ghost btn-circle btn-sm hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all"
+                        title="Logout"
+                    >
+                        <IoLogOut size={18} />
+                    </button>
+                </div>
+            </div>
         </div>
-            <button onClick={handleLogout} className="btn btn-primary btn-sm px-4">Logout</button>
-        </div>
-        </div>
-       </>
     )
 }
 

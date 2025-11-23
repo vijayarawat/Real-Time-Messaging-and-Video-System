@@ -156,7 +156,7 @@ NODE_ENV=development
 
 4. Start the server:
 ```bash
-npm run dev
+nodemon index.js
 ```
 The server will run on `http://localhost:5000`
 
@@ -174,7 +174,8 @@ npm install
 
 3. Create a `.env` file in the client directory:
 ```env
-VITE_SERVER_URL=http://localhost:5000
+VITE_SERVER_URL=set_here_the backend_url 
+dummy = http://localhost:5000
 ```
 
 4. Start the development server:
@@ -251,26 +252,6 @@ The client will run on `http://localhost:5173`
    - Any member accepting activates the call
    - Multiple peers connect via WebRTC mesh topology
    - Video streams displayed in responsive grid
-
-### Message Deduplication
-- Socket listeners filter messages from current user
-- Only messages from other users are added to prevent duplicates
-- Redux state and real-time updates stay in sync
-
-## Authentication Flow
-
-1. User signs up with username, email, and password
-2. Server stores hashed password (bcrypt)
-3. Login returns JWT token stored in cookies
-4. All API requests include JWT in headers/cookies
-5. `authMiddleware` verifies token on protected routes
-
-## Error Handling
-
-- Custom `ErrorHandler` class for consistent error responses
-- `asyncHandler` utility wraps async functions to catch errors
-- `errorMiddleware` processes errors and sends appropriate HTTP status codes
-- Validation on both client and server side
 
 ## Running the Application
 

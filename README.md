@@ -33,6 +33,24 @@ A full-stack web application that enables users to communicate through direct me
 - Search and add users
 - View online users
 
+### Group Join Codes
+- Each group gets a unique 8-character alphanumeric code
+- Users can join groups without being invited by admin
+- Codes are displayed in group settings for easy sharing
+
+### Video Call Workflow
+1. **Direct Calls**:
+   - Caller sends offer via Socket.io
+   - Receiver accepts and sends answer
+   - ICE candidates are exchanged
+   - WebRTC connection established
+
+2. **Group Calls**:
+   - Initiator creates call and sends SDP offer to all members
+   - Any member accepting activates the call
+   - Multiple peers connect via WebRTC mesh topology
+   - Video streams displayed in responsive grid
+
 ## Tech Stack
 
 ### Backend
@@ -232,26 +250,6 @@ The client will run on `http://localhost:5173`
 ### User Status
 - `user-online` - User comes online
 - `user-offline` - User goes offline
-
-## Key Features Explained
-
-### Group Join Codes
-- Each group gets a unique 8-character alphanumeric code
-- Users can join groups without being invited by admin
-- Codes are displayed in group settings for easy sharing
-
-### Video Call Workflow
-1. **Direct Calls**:
-   - Caller sends offer via Socket.io
-   - Receiver accepts and sends answer
-   - ICE candidates are exchanged
-   - WebRTC connection established
-
-2. **Group Calls**:
-   - Initiator creates call and sends SDP offer to all members
-   - Any member accepting activates the call
-   - Multiple peers connect via WebRTC mesh topology
-   - Video streams displayed in responsive grid
 
 ## Running the Application
 

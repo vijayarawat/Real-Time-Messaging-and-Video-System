@@ -1,4 +1,4 @@
-# Real-Time-Messaging-and-Video-System
+# Real Time Messaging and Video System
 
 A full-stack web application that enables users to communicate through direct messaging, group chats, and video calls with real-time synchronization using Socket.io and WebRTC.
 
